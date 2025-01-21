@@ -23,7 +23,7 @@ jobs:
       # Compile the Go program
       - name: Build
         run: |
-          go build src/main.go -o main
+          go build src/main.go
 
       # Upload the binary as an artifact
       - name: Upload binary
