@@ -1,0 +1,33 @@
+name: Build and Upload Go Binary
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the code
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Set up Go environment
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: 1.23  # Replace with your Go version
+
+      # Compile the Go program
+      - name: Build
+        run: |
+          go build src/main.go -o main
+
+      # Upload the binary as an artifact
+      - name: Upload binary
+        uses: actions/upload-artifact@v3
+        with:
+          name: main-linux-amd64
+          path: ./main
