@@ -4,20 +4,18 @@ import (
 	"fmt"
 	"github.com/bwmarrin/discordgo"
 	"log"
-	"nussknacker/src/config"
+	"os"
 	"time"
 )
 
 var (
-	CONFIG   *config.CFG
 	messages []string
 )
 
 func main() {
-	CONFIG = config.GetConfig()
-	fmt.Printf("Upload time: %s\n", CONFIG.SendTime)
+	fmt.Printf("Upload time: %s\n", os.Getenv("UPLOAD_TIME"))
 
-	session, err := discordgo.New("Bot " + CONFIG.BotToken)
+	session, err := discordgo.New("Bot " + os.Getenv("BOT_TOKEN"))
 	if err != nil {
 		fmt.Println("error creating Discord session,", err)
 		return
@@ -39,8 +37,6 @@ func main() {
 }
 
 func readyHandler(s *discordgo.Session, _ *discordgo.Ready) {
-	log.Println("Bot is ready!")
-
 	// Register slash commands
 	_, err := s.ApplicationCommandCreate(s.State.User.ID, "", &discordgo.ApplicationCommand{
 		Name:        "add",
@@ -84,10 +80,10 @@ func interactionHandler(s *discordgo.Session, i *discordgo.InteractionCreate) {
 func scheduleMessages(s *discordgo.Session) {
 	for {
 		now := time.Now()
-		if now.Format("15:04") == CONFIG.SendTime {
+		if now.Format("15:04") == os.Getenv("UPLOAD_TIME") {
 			// Send accumulated messages
 			if len(messages) > 0 {
-				channelID := CONFIG.ChannelID // Replace with the ID of the channel to send messages
+				channelID := os.Getenv("CHANNEL_ID") // Replace with the ID of the channel to send messages
 				for _, msg := range messages {
 					_, err := s.ChannelMessageSend(channelID, msg)
 					if err != nil {

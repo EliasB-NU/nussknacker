@@ -1,0 +1,7 @@
+services:
+  app:
+    image: "ghcr.io/eliasb-nu/nussknacker:${GIT_COMMIT_HASH:-latest}"
+    environment:
+      - "BOT_TOKEN=${BOT_TOKEN}"
+      - "UPLOAD_TIMEOUT=${UPLOAD_TIMEOUT}"
+      - "CHANNEL_ID=${CHANNEL_ID}"
