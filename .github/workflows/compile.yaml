@@ -48,7 +48,7 @@ jobs:
       - name: create env file
         run: |
           echo "GIT_COMMIT_HASH=${{ github.sha }}" >> ./envfile
-          echo "BOT_TOKEN"=${{ secrets.BOT_TOKEN }}" >> ./envfile
+          echo "BOT_TOKEN=${{ secrets.BOT_TOKEN }}" >> ./envfile
           echo "UPLOAD_TIME=${{ secrets.UPLOAD_TIME }}" >> ./envfile
           echo "CHANNEL_ID=${{ secrets.CHANNEL_ID }}" >> ./envfile
 
