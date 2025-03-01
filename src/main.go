@@ -71,6 +71,7 @@ func interactionHandler(s *discordgo.Session, i *discordgo.InteractionCreate) {
 				Flags:   discordgo.MessageFlagsEphemeral,
 			},
 		})
+		fmt.Println(messages)
 		if err != nil {
 			return
 		}
@@ -80,7 +81,7 @@ func interactionHandler(s *discordgo.Session, i *discordgo.InteractionCreate) {
 func scheduleMessages(s *discordgo.Session) {
 	for {
 		now := time.Now()
-		if now.Format("15:04") == os.Getenv("UPLOAD_TIME") {
+		if now.Format("15:04") == "04:20" {
 			// Send accumulated messages
 			if len(messages) > 0 {
 				channelID := os.Getenv("CHANNEL_ID") // Replace with the ID of the channel to send messages
